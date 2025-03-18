@@ -1,0 +1,29 @@
+<head>
+    <script>
+        async function selectValue() {
+            const a = document.getElementById('1').value;
+            const b = document.getElementById('2').value;
+            const url = `http://localhost:3000/sum?a=${a}&b=${b}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                if (!response.ok) {
+                    console.log("Bad API request");
+                } else {
+                    document.getElementById('result').innerHTML = data.answer;
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <input id="1" type="number" placeholder="First Value">
+    <input id="2" type="number" placeholder="Second Value">
+    <button onclick="selectValue()">Find the sum</button>
+    <span>Your Result is : </span>
+    <span id="result"></span>
+</body>
