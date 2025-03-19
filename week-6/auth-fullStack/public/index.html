@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth Full Stack - Frontend</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <h3>SignUp</h3>
+    <input type="text" id="signup-username" placeholder="Username">
+    <input type="text" id="signup-password" placeholder="Password">
+    <button type="submit" onclick="signup()">Submit</button>
+    <br>
+    <h3>SignIN</h3>
+    <input type="text" id="signin-username" placeholder="Username">
+    <input type="text" id="signin-password" placeholder="Password">
+    <button type="submit" onclick="signin()">Submit</button>
+    <br>
+
+    <h3>User Information : </h3><button onclick="getInformation()">Get Information</button>
+    <div id="Information">
+        <span id="info-username">Username : </span>
+        <br>
+        <span id="info-password">Password : </span>
+    </div>
+
+    <script>
+        async function signup() {
+            const username = document.getElementById("signup-username").value;
+            const password = document.getElementById("signup-password").value;
+
+            await axios.post("http://localhost:3000/signup", {
+                username: username,
+                password: password
+            });
+
+            alert("You are signed up!!!");
+        }
+
+        async function signin() {
+            const username = document.getElementById("signin-username").value;
+            const password = document.getElementById("signin-password").value;
+
+            const response = await axios.post("http://localhost:3000/signin", {
+                username: username,
+                password: password
+            });
+
+            localStorage.setItem("token", response.data.token);
+            alert("You are Signed in!!!");
+        }
+
+        async function getInformation() {
+            const response = await axios.get("http://localhost:3000/me", {
+                headers: {
+                    token: localStorage.getItem("token")
+                }
+            });
+
+
+            let username = document.getElementById("info-username");
+            let password = document.getElementById("info-password");
+
+            username.innerHTML += response.data.username;
+            password.innerHTML += response.data.password;
+
+        }
+    </script>
+</body>
+
+</html>
