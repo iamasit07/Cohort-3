@@ -9,6 +9,6 @@ courseRouter.post('/purchase', async (req, res) => {
 
 })
 
-module.exports({
+module.exports = {
     courseRouter: courseRouter
-})
+}

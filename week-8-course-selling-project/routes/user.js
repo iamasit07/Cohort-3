@@ -13,6 +13,6 @@ userRouter.get('/courses', async (req, res) => {
 
 })
 
-module.exports({
+module.exports = {
     userRouter: userRouter
-})
+}
