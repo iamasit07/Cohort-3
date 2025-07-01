@@ -1,22 +1,22 @@
+import { useEffect, useState } from "react";
 import "./App.css"
-let currentClock;
-
-function useDebounce(fun) {
-  clearTimeout(currentClock);
-  currentClock = setTimeout(fun, 30);
-}
+import useDebounce from "./hooks/useDebounce"
 
 function App() {
+  const [inputVal, setInputVal] = useState("");
+  const debounce = useDebounce(inputVal, 200);
 
-  function sendDataToBackend() {
-    fetch("");
+  function change(e) {
+    setInputVal(e.target.value);
   }
 
-  const debounce = useDebounce(sendDataToBackend);
+  useEffect(() => {
+    console.log("expensive opperation");
+  }, [debounce]);
 
   return (
     <>
-      <input type='text' onChange={debounce}></input>
+      <input type='text' onChange={change}></input>
     </>
   )
 }
